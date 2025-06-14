@@ -116,7 +116,7 @@ button {
     text-align: center;
     position: relative;
     background: url(header.svg);
-    background-color: var(--bill-primary);
+    background-color: var(--bill-primary) !important;
     background-size: cover;
     background-repeat: no-repeat;
     /* color: var(--primary); */

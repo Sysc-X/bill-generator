@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bill Generator</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="bills.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+  <h2>Bill Generator</h2>
+
+  <div class="container">
+    <div class="form"> 
+        <div class="form-input">
+            <span>Customer</span>
+            <input type="text" id="customer" placeholder="Customer" autofocus='on'/>
+        </div>
+        <div class="form-input">
+            <span>Item</span>
+            <input type="text" id="item" placeholder="Item" />
+        </div>
+        <div class="form-input">
+            <span>Price</span>
+            <input type="number" id="price" placeholder="Harga" />
+        </div>
+        <div class="form-input">
+            <span>Qty</span>
+            <input type="number" id="quantity" placeholder="Qty" />
+        </div>
+
+        <button onclick="addItem()">Add Item</button>
+        <button onclick="downloadAsImage()">Save Image</button>
+        <!-- <button onclick="shareWhatsApp()">📤 WhatsApp</button> -->
+    </div>
+
+    <div class="bills-preview" id="bills">
+        <!-- preview -->
+        <div class="header-bill">
+            <h3 id="customer-name">Customer</h3>
+            <span style="font-size:0.8rem" id="tanggal">Tanggal : </span>
+        </div>
+        <div class="card" id="billSection">
+            <div class="card-header">
+                <!-- <h2><i class="ri-bill-line"></i></h2> -->
+                <div class="img-contain">
+                  <img src="bills.png" width="90px" alt="bill-icon">
+                </div>
+                <span id="gt-total">0 IDR</span>
+            </div>
+            <div class="card-body" id="billBody">
+            <!-- Items will appear here -->
+            </div>
+            <div class="card-footer">
+                <span>Total Tagihan</span>
+                <span id="grandTotal">0 IDR</span>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const today = new Date();
+
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        const formatted = today.toLocaleDateString('id-ID', options);
+
+        document.getElementById('tanggal').innerText = formatted;
+    });
+
+    function capitalizeText(text) {
+      return text
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    }
+
+    const customer = document.getElementById('customer');
+    customer.addEventListener('keyup', () => {
+      if (customer.value != ''){
+        document.getElementById('customer-name').innerText = customer.value;
+      }else{
+        document.getElementById('customer-name').innerText = 'Customer';
+      }
+    })
+
+    function formatRupiah(amount) {
+      return amount.toLocaleString('id-ID', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }) + ' IDR';
+    }
+
+    function addItem() {
+      const item = document.getElementById('item').value.trim();
+      const price = parseFloat(document.getElementById('price').value);
+      const quantity = parseInt(document.getElementById('quantity').value);
+
+      if (!item || isNaN(price) || isNaN(quantity)) {
+        alert("Mohon isi nama item, harga, dan jumlah dengan benar.");
+        return;
+      }
+
+      const total = price * quantity;
+      const formattedPrice = formatRupiah(price);
+      const formattedTotal = formatRupiah(total);
+
+      const billBody = document.getElementById('billBody');
+
+      const div = document.createElement('div');
+      div.classList.add('bill-item');
+      div.setAttribute('data-total', total); // simpan total item
+      div.innerHTML = `
+        <span>${capitalizeText(item)} <br>${formattedPrice} x ${quantity}</span>
+        <span><button onclick="removeItem(this)" class="no-print">X</button><br>${formattedTotal}</span>
+      `;
+      billBody.appendChild(div);
+
+      recalculateTotal();
+
+      // Kosongkan input
+      document.getElementById('item').value = '';
+      document.getElementById('price').value = '';
+      document.getElementById('quantity').value = '';
+    }
+
+    function removeItem(button) {
+      const itemDiv = button.closest('.bill-item');
+      itemDiv.remove();
+      recalculateTotal();
+    }
+
+    function recalculateTotal() {
+      const items = document.querySelectorAll('.bill-item');
+      let newTotal = 0;
+      items.forEach(item => {
+        const total = parseFloat(item.getAttribute('data-total')) || 0;
+        newTotal += total;
+      });
+      document.getElementById('grandTotal').innerText = formatRupiah(newTotal);
+      document.getElementById('gt-total').innerText = formatRupiah(newTotal);
+    }
+
+    function downloadAsImage() {
+      // Sembunyikan elemen yang tidak ingin ditampilkan
+      const elementsToHide = document.querySelectorAll('.no-print');
+      elementsToHide.forEach(el => el.style.display = 'none');
+
+      const billElement = document.getElementById("bills");
+
+      html2canvas(billElement).then(canvas => {
+          canvas.toBlob(blob => {
+          const file = new File([blob], "tagihan.png", { type: "image/png" });
+          const url = URL.createObjectURL(file);
+
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "tagihan.png";
+          link.click();
+
+          // Tampilkan kembali elemen yang disembunyikan
+          elementsToHide.forEach(el => el.style.display = '');
+          });
+      });
+    }
+
+  </script>
+</body>
+</html>

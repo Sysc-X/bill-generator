@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+:root{
+    --primary: #121212;
+    --secondary: #d19b00;
+
+    --darkgray: #1e1e1e;
+    --bill-primary: #021028;
+    --bill-secondary: #315E74;
+}
+
+* {
+    font-family: 'Outfit', sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--primary);
+    color: #fff;
+    padding: 20px;
+    font: 1rem;
+}
+
+input {
+    margin: 5px;
+    padding: 6px;
+    text-transform: capitalize;
+}
+
+button {
+    margin: 10px 5px;
+    padding: 7px 14px;
+    background: var(--bill-secondary);
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.bills-preview .header-bill{
+    text-align: center;
+    padding: 20px;
+}
+
+.bills-preview .bill-item button {
+    margin-left: -10px;
+    position: absolute;
+    left: 30px;
+    background-color: var(--bill-secondary);
+    color: white;
+    border: none;
+    border-radius: 0px 5px 5px 0px;
+    height: 30px;
+    padding: 2px 8px;
+    cursor: pointer;
+}
+
+#gt-total{
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+#customer-name{
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: capitalize;
+}
+
+.form-input {
+  width: 100%;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  margin: 8px 0;
+  flex-wrap: wrap; /* allows wrapping on smaller screens */
+}
+
+.form-input span {
+  font-size: 0.9rem;
+  flex: 1; /* allows it to grow */
+  max-width: 100px;
+}
+
+.form-input input {
+  flex: 1;
+  min-width: 150px;
+  max-width: 250px;
+  padding: 6px 10px;
+  background-color: var(--darkgray);
+  border: 1px solid #444;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.bills-preview{
+    width: 420px;
+    /* border-radius: 10px; */
+    background-color: var(--bill-primary);
+    padding: 20px;
+}
+
+
+.card {
+    background-color: white;
+    max-width: 420px;
+    /* margin: auto; */
+    overflow: hidden;
+    /* box-shadow: 0 0 10px #000; */
+}
+
+.card-header {
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    background: url(header.svg);
+    background-color: var(--bill-primary);
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* color: var(--primary); */
+}
+
+.card-header .img-contain{
+    width: 100%;
+}
+
+.card-footer{
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 15px 20px 30px 20px;
+    color: var(--bill-secondary);
+    background: url(footer.svg);
+    background-color: var(--bill-primary);
+    background-size: cover;
+    background-position: bottom;
+}
+
+.card-header::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    /* background: radial-gradient(circle, var(--secondary) 10%, transparent 11%); */
+    background-size: 20px 20px;
+}
+
+.card-header h2 {
+    margin: 0;
+}
+
+.card-body {
+    padding: 20px;
+    min-height: 250px;
+}
+
+.bill-item {
+    color: var(--primary);
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    font-size: 14px;
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 4px;
+}
+
+/* .bill-item:last-child {
+    border-bottom: none;
+} */
+
+.total {
+    margin-top: 20px;
+    border-top: 1px solid var(--secondary);
+    padding-top: 10px;
+    font-weight: bold;
+    font-size: 16px;
+}

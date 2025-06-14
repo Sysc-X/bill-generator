@@ -19,6 +19,7 @@
 body {
     background-color: var(--primary);
     color: #fff;
+    border: none;
     padding: 20px;
     font: 1rem;
 }
@@ -95,7 +96,7 @@ button {
 }
 
 .bills-preview{
-    width: 420px;
+    width: 350px;
     /* border-radius: 10px; */
     background-color: var(--bill-primary);
     padding: 20px;
@@ -104,8 +105,8 @@ button {
 
 .card {
     background-color: white;
-    max-width: 420px;
-    /* margin: auto; */
+    max-width: 350px;
+    margin: auto;
     overflow: hidden;
     /* box-shadow: 0 0 10px #000; */
 }
@@ -125,16 +126,19 @@ button {
     width: 100%;
 }
 
+
 .card-footer{
     font-weight: 700;
     display: flex;
     justify-content: space-between;
     font-size: 14px;
+    border: none;
     padding: 15px 20px 30px 20px;
     color: var(--bill-secondary);
-    background: url(footer.svg);
+    background: url(footer.png);
     background-color: var(--bill-primary);
     background-size: cover;
+    background-repeat: no-repeat;
     background-position: bottom;
 }
 
